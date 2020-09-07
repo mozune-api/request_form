@@ -1,27 +1,38 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 
 <head>
-    <title>リクエストフォーム</title>
-    <script>
-
-        function Content() {
-            var request = new XMLHttpRequest();
-            request.open('GET', "https://mozune-api.github.io/vinfo/api/v1/", true);
-            request.responseType = 'json';
-            request.onload = function () {
-                var data = this.response;
-                for (var d in data) {
-                    console.log(d['id'] + d['title']);
-                }
-            }
-            document.open();
-            document.close();
-        }
-    </script>
+    <meta charset="utf-8">
+    <title>リクエスト</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
 </head>
 
-<body onload="Content();">
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript">
+        var url = "https://mozune-api.github.io/vinfo/api/v1/";
+        document.open();
+        $.getJSON(url, (data) => {
+            console.log(data);
+            for(let i = 0; i<data.length; i++){
+                console.log(data[i].id);
+                $("#videos").append(`<p><a href="https://docs.google.com/forms/d/e/1FAIpQLSelzSvknNncgEjDACX6UiO9w8LIMhmyxV5nrybDcWO0ms5SAQ/viewform?usp=pp_url&entry.88264548=`
+                + data[i].id + `">` + data[i].title + "</a></p>");
+            }
+        });
+        document.close();
+    </script>
+    <h1>切り抜きリクエスト</h1>
+    <p><a href="https://mozune-api.github.io/">ねねボタン</a>にリクエストを送る際のフォームを配置しているサイトです。</p>
+    <p>リクエストを送りたい動画のリンクをクリックするとフォームへ飛びます。</p>
+    <p>リンク先では、<b>IDはそのまま</b>、開始時間と終了時間を入力してください。</p>
+    <hr>
+    <div id="videos"></div>
+
+    <hr>
+    <div id="footer">
+        <p>連絡先：nenebutton [at] gmail [dot] com</p>
+    </div>
 </body>
 
 </html>
-
